@@ -1,0 +1,22 @@
+{% extends 'base.html' %}    <!-- using jinja using common code part from base.html-->
+  {% block body %}
+    
+      <form action="/update/{{todo.sno}}"method="POST">
+        <h3 style="text-align: center " class="mt-7">Update your Todo</h3>
+        <div class="container my-3">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" name="title" id="title" value="{{todo.title}}"  placeholder="Enter the tile">
+              </div>
+              <div class="mb-3">
+                <label for="desc" class="form-label">Description </label>
+                <input type="text" class="form-control" name="desc" id="desc"value="{{todo.desc}}" placeholder="Title Description">
+                <div class="d-grid gap-2 col-6 mx-auto my-4">
+                  <button class="btn btn-primary" type="submit">Update</button>
+                </div>
+              </div>
+          </div>
+      </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    {% endblock body %}
