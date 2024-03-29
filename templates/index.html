@@ -2,8 +2,12 @@
 j{% block title %} Home Page {% endblock title %}
 {% block body %}
     
- 
-      <form action="/"method="POST">
+<div class="alert alert-info" role="alert">
+  <p class="text-center text-danger">WELCOME {{todo.username}}</p>
+    <p style="text-align: center ; " class="text-right"> Not the final version &#174; Golu kumar</p>
+</div> 
+
+      <form action="/home"method="POST">
         <h3 style="text-align: center">Add a Todo</h3>
         <div class="container my-3">
             <div class="mb-3">
