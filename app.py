@@ -3,6 +3,7 @@ import bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from zxcvbn import zxcvbn
+from pytz import timezone
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///todo.db"
@@ -15,7 +16,7 @@ class Todo(db.Model):
     sno = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     desc = db.Column(db.String(500), nullable=True)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    date_created = db.Column(db.DateTime, default=datetime.now(timezone('Asia/Kolkata')))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref=db.backref('todos', lazy=True))
 
@@ -24,7 +25,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(100), nullable=False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    date_created = db.Column(db.DateTime, default=datetime.now(timezone('Asia/Kolkata')))
     role = db.Column(db.String(30), default='default')
 
 
@@ -45,6 +46,9 @@ def home():
             db.session.commit()
 
         user_todos = user.todos
+        # Convert time zone for each todo item
+        for todo in user_todos:
+            todo.date_created = todo.date_created.astimezone(timezone('Asia/Kolkata'))
         return render_template('index.html', allTodo=user_todos)
     else:
         return redirect('/signin')
